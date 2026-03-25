@@ -1,0 +1,12 @@
+:root {
+    --background-gr: #F7F5F8;
+    --background-wt: #FFFFFF;
+    --gray: #848388;
+    --font-family: "Roboto", sans-serif;
+}
+
+body {
+    background: var(--background-gr);
+    font-family: var(--font-family);
+    padding: 0.75rem 2rem;
+}
