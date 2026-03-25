@@ -1,12 +1,6 @@
 import axios from "axios";
 import type { FilterType } from "../store/filterStore";
-
-type CardType = {
-    category: "auto" | "real_estate" | "electronics";
-    title: string;
-    price: number;
-    needsRevision: boolean;
-}
+import type { CardType, CardInfoType, FormData } from "../types";
 
 interface CardResponse {
     items: CardType[],
@@ -37,4 +31,31 @@ export const getCards = async (start: number = 0, limit: number = 10, filter: Fi
         } catch (error) {
             console.error("Ошибка получения данных:", error === null ? '' : error);
         }
+}
+
+export const getCardInfo = async (id: string): Promise<CardInfoType | undefined> => {
+    try {
+            const response = await axios.get(`${API_URL}/items/${id}`);
+            return response.data;
+
+    } catch (error) {
+            console.error("Ошибка получения данных:", error === null ? '' : error);
     }
+}
+
+export const putCardInfo = async (data: FormData, id: string): Promise<void> => {
+    try {
+            const payload = {
+                category: data.category,
+                title: data.title,
+                price: Number(data.price),
+                description: data.description,
+                params: data.params,
+            };
+
+            await axios.put(`${API_URL}/items/${id}`, payload);
+
+    } catch (error) {
+            console.error("Ошибка получения данных:", error === null ? '' : error);
+    }
+}

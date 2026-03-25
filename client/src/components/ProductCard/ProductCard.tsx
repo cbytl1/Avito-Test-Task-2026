@@ -1,17 +1,12 @@
 import React from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { useNavigate } from "react-router-dom";
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import styles from './ProductCard.module.css';
-
-type CardType = {
-    category: "auto" | "real_estate" | "electronics";
-    title: string;
-    price: number;
-    needsRevision: boolean;
-}
+import type { CardType } from "../../types";
 
 type CardProps = {
     card: CardType;
@@ -25,6 +20,8 @@ const ProductCard: React.FC<CardProps> = ({card}) => {
         "electronics" : "Электроника" 
     }
 
+    const navigate = useNavigate()
+
     return (
         <Card className={styles.card} sx={{
             maxWidth: 200,
@@ -32,7 +29,7 @@ const ProductCard: React.FC<CardProps> = ({card}) => {
             border: "1px solid #f0f0f0",
             boxShadow: "none"
         }}>
-            <CardActionArea sx={{
+            <CardActionArea onClick={() => navigate(`/ads/${card.id}`)} sx={{
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",

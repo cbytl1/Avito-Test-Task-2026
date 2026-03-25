@@ -8,13 +8,7 @@ import Header from '../components/Header/Header';
 import SearchBar from '../components/SearchBar/SearchBar';
 import Filter from '../components/Filter/Filter';
 import { useEffect, useState } from 'react';
-
-type CardType = {
-    category: "auto" | "real_estate" | "electronics";
-    title: string;
-    price: number;
-    needsRevision: boolean;
-}
+import type { CardType } from "../types";
 
 interface CardResponse {
     items: CardType[],
@@ -55,7 +49,7 @@ const Dashboard = () => {
                             (
                                 <>
                                     {cards!.items.map((item: CardType) => (
-                                        <ProductCard key={cards!.items.indexOf(item)} card={item} />
+                                        <ProductCard key={item.id} card={item} />
                                     ))}
                                 </>
                             )

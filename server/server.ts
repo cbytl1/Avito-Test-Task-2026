@@ -15,13 +15,17 @@ const fastify = Fastify({
 await fastify.register((await import('@fastify/middie')).default);
 
 // Искуственная задержка ответов, чтобы можно было протестировать состояния загрузки
-fastify.use((_, __, next) =>
-  new Promise(res => setTimeout(res, 300 + Math.random() * 700)).then(next),
-);
-
-// Настройка CORS
-fastify.use((_, reply, next) => {
+fastify.use((req, reply, next) => {
   reply.setHeader('Access-Control-Allow-Origin', '*');
+  reply.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');  
+  reply.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    reply.statusCode = 204;
+    reply.end();
+    return;
+  }
+
   next();
 });
 
@@ -105,6 +109,7 @@ fastify.get<ItemsGetRequest>('/items', request => {
       })
       .slice(skip, skip + limit)
       .map(item => ({
+        id: item.id,
         category: item.category,
         title: item.title,
         price: item.price,
