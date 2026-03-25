@@ -1,0 +1,10 @@
+:root {
+    --background-gr: #F7F5F8;
+    --background-wt: #FFFFFF;
+    --font-size: 16px;
+}
+
+body {
+    background: var(--background-gr);
+    font-size: var(--font-size);
+}
